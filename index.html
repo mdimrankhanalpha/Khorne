@@ -14,28 +14,45 @@
 <div id="splash" aria-hidden="true"><img class="av" alt=""><p>Skulls for the Skull Throne</p></div>
 
 <header class="bar">
-  <a class="brand" href="#top"><img class="av sm" alt="">KHORNE</a>
-  <input id="q" type="search" placeholder="Search posts and lore" autocomplete="off" aria-label="Search posts and lore">
-  <a href="#lore">Lore</a><a href="#feed">Feed</a>
+  <a class="brand" href="#top"><img class="av sm" alt=""><span class="bn">KHORNE</span></a>
+  <div class="sw">
+    <input id="q" type="search" placeholder="Search posts" autocomplete="off" aria-label="Search posts">
+    <button id="sbtn" aria-label="Search" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+  </div>
+  <button id="abtn" class="ab">About Khorne</button>
 </header>
 
 <main id="top">
-<section class="hero">
+<section class="prof">
   <img class="av big" alt="Khorne enthroned on a mountain of skulls" width="732" height="798">
   <div>
     <h1>KHORNE</h1>
-    <h2>THE BLOOD GOD</h2>
-    <p class="role">Chaos God of blood, war, rage and violence.</p>
-    <p>Khorne is one of the four major Chaos Gods, a vast power of the Warp bound to violence, rage, bloodshed and martial prowess. He is no patron of orderly war: his hunger for blood and skulls is never satisfied, and it turns his followers against allies, masters and one another. Below you will find his lore, then a feed that grows whenever Post.txt does.</p>
+    <p class="role">THE BLOOD GOD</p>
+    <p class="sub">Chaos God of blood, war, rage and violence.</p>
     <p class="tag">“Skulls for the Skull Throne. Blood for the Blood God.”</p>
-    <a class="btn" href="#feed">Enter the archive</a>
   </div>
 </section>
 
 <nav id="cats" aria-label="Categories"></nav>
 
-<section id="lore">
-<h2 class="sec">Lore archive</h2>
+<section id="feed-wrap">
+  <div id="feed"></div>
+  <div id="sent"></div>
+  <div id="st" role="status" aria-live="polite"></div>
+  <small id="sync"></small>
+</section>
+</main>
+
+<div id="about" hidden role="dialog" aria-modal="true" aria-label="About Khorne">
+  <div class="ain">
+    <button id="aclose" class="btn" aria-label="Close">Close ✕</button>
+    <h2 class="sec">About Khorne</h2>
+    <p class="intro">Khorne is one of the four major Chaos Gods, a vast power of the Warp bound to violence, rage, bloodshed and martial prowess. He is no patron of orderly war: his hunger for blood and skulls is never satisfied, and it turns his followers against allies, masters and one another.</p>
+    <section id="lore">
+<details open><summary>Why Khorne is so powerful</summary>
+<p>Rage and bloodshed run through mortal life, and every war feeds the currents Khorne is bound to. He commands vast daemon hosts (Bloodletters, Bloodthirsters), mortal armies such as the World Eaters, and champions who offer skulls for his favour. His strength is raw, direct violence, backed by endless tribute.</p>
+<p>That power has costs: his hunger can never be satisfied, his followers turn on one another, and he despises sorcery. Official lore does not rank the Chaos Gods, so he is neither strongest nor weakest by decree.</p>
+</details>
 <details><summary>Khorne, the Blood God</summary>
 <p>Khorne is a Chaos God: a vast, sentient power of the Warp shaped by rage, hatred, bloodshed and the thrill of combat. Titles include the Blood God, Lord of Skulls and Bloodfather. He is shown enthroned on the Skull Throne amid piled trophies, and his seat in the Warp is the Brass Citadel (descriptions vary between publications).</p>
 <p>His creed prizes strength, martial skill and skulls offered in tribute, and holds sorcery and cowardice in contempt. Yet his worship destroys restraint and stable loyalty. “Khorne cares not from whence the blood flows” sums it up: blood of enemy, ally or follower serves the same cycle. Eight is his sacred number, a recurring motif in daemonic organisation and symbolism.</p>
@@ -86,15 +103,8 @@ AUDIO$War horn$Clip$https://example.com/horn.mp3</pre>
 <a href="https://www.warhammer-community.com/en-gb/articles/5cFlSfYS/meet-kabandha-the-greater-daemon-who-nearly-killed-sanguinius-twice/" rel="noopener" target="_blank">Ka’Bandha</a>.</p>
 </details>
 </section>
-
-<section id="feed-wrap">
-  <h2 class="sec" id="feed-h">The feed</h2>
-  <div id="feed"></div>
-  <div id="sent"></div>
-  <div id="st" role="status" aria-live="polite"></div>
-  <small id="sync"></small>
-</section>
-</main>
+  </div>
+</div>
 
 <div id="lb" hidden><button id="lbf" aria-label="Full screen">⛶</button><button id="lbx" aria-label="Close">✕</button><img alt=""></div>
 <script src="script.js"></script>

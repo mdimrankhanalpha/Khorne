@@ -104,7 +104,7 @@ function unzoom() { lb.hidden = true; lbi.removeAttribute("src"); document.body.
 lb.onclick = e => { if (e.target === lb) unzoom(); };
 $("#lbx").onclick = unzoom;
 $("#lbf").onclick = () => { const f = lb.requestFullscreen || lb.webkitRequestFullscreen; if (f) f.call(lb); };
-addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) unzoom(); });
+addEventListener("keydown", e => { if (e.key === "Escape") { if (!lb.hidden) unzoom(); else if (!$("#about").hidden) about(false); } });
 
 function slot(cls, build) { // placeholder box with retry on failure
   const w = h("div", "m " + cls);
@@ -186,7 +186,7 @@ const match = r => CATS[S.cat][1](r) && S.terms.every(w => r.x.includes(w));
 function note(t, btn) { st.replaceChildren(); if (t) st.append(h("span", "", t)); if (btn) { const b = h("button", "btn", btn[0]); b.onclick = btn[1]; st.append(b); } }
 function empty() {
   if (!S.loaded) return;
-  if (!S.all.length) note("The archive is empty. Add records to Post.txt; see the archivist’s guide in the lore section.");
+  if (!S.all.length) note("The archive is empty. Add records to Post.txt; see the archivist’s guide under About Khorne.");
   else if (!S.view.length) note("No posts match. Try another search or category.", ["Clear filters", clear]);
   else note("");
 }
@@ -230,6 +230,12 @@ function search() {
   lore.forEach(({ d, t }) => { const ok = S.terms.every(w => t.includes(w)); d.hidden = !ok; if (S.terms.length) d.open = ok; });
   rebuild();
 }
+const bar = document.querySelector(".bar");
+function box(on) { bar.classList.toggle("s", on); $("#sbtn").setAttribute("aria-expanded", on); if (on) q.focus(); else if (q.value) { q.value = ""; search(); } }
+$("#sbtn").onclick = () => box(!bar.classList.contains("s"));
+q.onkeydown = e => { if (e.key === "Escape") box(false); };
+function about(on) { $("#about").hidden = !on; document.body.style.overflow = on ? "hidden" : ""; if (on) $("#about").scrollTop = 0; }
+$("#abtn").onclick = () => about(true); $("#aclose").onclick = () => about(false);
 let dt; q.oninput = () => { clearTimeout(dt); dt = setTimeout(search, 200); };
 function setCat(i) { S.cat = i; [...$("#cats").children].forEach((b, j) => b.setAttribute("aria-pressed", j === i)); rebuild(); }
 function clear() { q.value = ""; S.terms = []; lore.forEach(({ d }) => d.hidden = false); setCat(15); }
