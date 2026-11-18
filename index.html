@@ -89,7 +89,7 @@
 <details><summary>Archivist’s guide: adding posts</summary>
 <p>Edit only Post.txt. One record per line, fields separated by <code>$</code>:</p>
 <pre>TYPE$TITLE$DESCRIPTION$URL1$URL2$URL3</pre>
-<p>Types: TEXT, PHOTO, PHOTOS, VIDEO, VIDEOS, PHOTO_VIDEO, MIXED, YOUTUBE, AUDIO. Title, description and URLs are optional. Lines starting with # and blank lines are ignored. Write a literal dollar sign as <code>\$</code> and a line break as <code>\n</code>. Normal GitHub file URLs work for media. A line with no TYPE (<code>TITLE$DESCRIPTION$URL…</code>) is also accepted and its type is detected. Identical lines count as one record.</p>
+<p>Types: TEXT, PHOTO, PHOTOS, VIDEO, VIDEOS, PHOTO_VIDEO, MIXED, YOUTUBE, AUDIO. Title, description and URLs are optional. Lines starting with # and blank lines are ignored. Write a literal dollar sign as <code>\$</code> and a line break as <code>\n</code>. Normal GitHub file URLs work for media. A line with no TYPE (<code>TITLE$DESCRIPTION$URL…</code>) is also accepted and its type is detected. Alternatively, put a line containing only <code>$</code> between posts and write each part of a post on its own line (title, description, links). Identical records count as one.</p>
 <pre>TEXT$The Skull Throne$Skulls for the Skull Throne.
 PHOTOS$Throne$Two views$https://github.com/me/repo/blob/main/a.jpg$https://github.com/me/repo/blob/main/b.png
 YOUTUBE$Chronicle$A video$https://youtu.be/XXXXXXXXXXX

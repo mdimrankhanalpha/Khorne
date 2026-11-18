@@ -8,7 +8,8 @@
    Literal dollar sign: \$    Line break in a description: \n
    Lines without a TYPE word (TITLE$DESCRIPTION$URL...) are accepted; the type is detected from the URLs.
    Media kind is detected from the URL (YouTube patterns, extensions, data: MIME), with the TYPE as a hint.
-   Identical lines are treated as one record. New records should be appended to the end of the file. */
+   Block layout also works: if a line holds only $, it separates posts, and each line between two such lines is one field of that post.
+   Identical records are treated as one. New records should be appended to the end of the file. */
 
 const POST_SOURCE_URL = "https://github.com/mdimrankhanalpha/Khorne/blob/main/Post.txt";
 const PROFILE_IMAGE_URL = "https://github.com/mdimrankhanalpha/Khorne/blob/main/761cdbe4a78cbfc8285553c930f21361.jpg";
@@ -73,7 +74,7 @@ function rec(line, id) {
     f.slice(2).forEach(s => { if (isU(s)) urls.push(s); else if (s) desc += (desc ? " " : "") + s; });
   } else {
     const txt = f.filter(s => s && !isU(s));
-    urls = f.filter(isU); title = txt[0] || ""; desc = txt.slice(1).join(" "); type = "";
+    urls = f.filter(isU); title = txt[0] || ""; desc = txt.slice(1).join("\n"); type = "";
   }
   const media = urls.map(u => ({ k: kind(u, type), u: toRaw(u) }));
   if (!title && !desc && !media.length) return null;
@@ -81,11 +82,17 @@ function rec(line, id) {
   return { id, title, desc, media, type: type || autoType(media), s, x: s + " " + (type || autoType(media)).toLowerCase() };
 }
 function parse(text) {
+  const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).map(l => l.trim());
+  const units = [];
+  if (lines.some(l => l === "$")) { // block mode: a line holding only $ separates posts
+    let cur = [];
+    lines.forEach(l => { if (l === "$") { if (cur.length) units.push(cur.join("$")); cur = []; } else if (l && l[0] !== "#") cur.push(l); });
+    if (cur.length) units.push(cur.join("$"));
+  } else lines.forEach(l => { if (l && l[0] !== "#") units.push(l); }); // one post per line
   const seen = new Set(), out = [];
-  text.replace(/^\uFEFF/, "").split(/\r?\n/).forEach(l => {
-    l = l.trim(); if (!l || l[0] === "#") return;
-    const id = hash(l); if (seen.has(id)) return; seen.add(id);
-    try { const r = rec(l, id); if (r) out.push(r); } catch (e) { /* skip malformed line */ }
+  units.forEach(u => {
+    const id = hash(u); if (seen.has(id)) return; seen.add(id);
+    try { const r = rec(u, id); if (r) out.push(r); } catch (e) { /* skip malformed record */ }
   });
   return out;
 }
